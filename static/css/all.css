@@ -1,1 +1,5 @@
-textarea { text-transform: uppercase; }
+textarea { 
+    text-transform: uppercase; 
+    height: 60px;
+    width: 300px;
+}

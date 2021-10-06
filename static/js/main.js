@@ -1,52 +1,53 @@
-let SOUND_ASSETS = [
-    {key: "#", filename: "hash.wav"},
-    {key: "'", filename: "'.wav"},
-    {key: "(", filename: "(.wav"},
-    {key: ")", filename: ").wav"},
-    {key: ",", filename: ",.wav"},
-    {key: "0", filename: "0.wav"},
-    {key: "1", filename: "1.wav"},
-    {key: "2", filename: "2.wav"},
-    {key: "3", filename: "3.wav"},
-    {key: "4", filename: "4.wav"},
-    {key: "5", filename: "5.wav"},
-    {key: "6", filename: "6.wav"},
-    {key: "7", filename: "7.wav"},
-    {key: "8", filename: "8.wav"},
-    {key: "9", filename: "9.wav"},
-    {key: "=", filename: "=.wav"},
-    {key: "A", filename: "A.wav"},
-    {key: "B", filename: "B.wav"},
-    {key: "C", filename: "C.wav"},
-    {key: "D", filename: "D.wav"},
-    {key: "E", filename: "E.wav"},
-    {key: "F", filename: "F.wav"},
-    {key: "G", filename: "G.wav"},
-    {key: "H", filename: "H.wav"},
-    {key: "I", filename: "I.wav"},
-    {key: "J", filename: "J.wav"},
-    {key: "K", filename: "K.wav"},
-    {key: "L", filename: "L.wav"},
-    {key: "M", filename: "M.wav"},
-    {key: "N", filename: "N.wav"},
-    {key: "O", filename: "O.wav"},
-    {key: "P", filename: "P.wav"},
-    {key: "Q", filename: "Q.wav"},
-    {key: "R", filename: "R.wav"},
-    {key: "S", filename: "S.wav"},
-    {key: "T", filename: "T.wav"},
-    {key: "U", filename: "U.wav"},
-    {key: "V", filename: "V.wav"},
-    {key: "W", filename: "W.wav"},
-    {key: "X", filename: "X.wav"},
-    {key: "Y", filename: "Y.wav"},
-    {key: "Z", filename: "Z.wav"},
-    {key: "*", filename: "asterisk.wav"},
-    {key: ":", filename: "colon.wav"},
-    {key: ".", filename: "dot.wav"},
-    {key: "/", filename: "slash.wav"}
+const SOUND_ASSETS = [
+    {key: "#", filename: "hash"},
+    {key: "'", filename: "'"},
+    {key: "(", filename: "("},
+    {key: ")", filename: ")"},
+    {key: ",", filename: ","},
+    {key: "0", filename: "0"},
+    {key: "1", filename: "1"},
+    {key: "2", filename: "2"},
+    {key: "3", filename: "3"},
+    {key: "4", filename: "4"},
+    {key: "5", filename: "5"},
+    {key: "6", filename: "6"},
+    {key: "7", filename: "7"},
+    {key: "8", filename: "8"},
+    {key: "9", filename: "9"},
+    {key: "=", filename: "="},
+    {key: "A", filename: "A"},
+    {key: "B", filename: "B"},
+    {key: "C", filename: "C"},
+    {key: "D", filename: "D"},
+    {key: "E", filename: "E"},
+    {key: "F", filename: "F"},
+    {key: "G", filename: "G"},
+    {key: "H", filename: "H"},
+    {key: "I", filename: "I"},
+    {key: "J", filename: "J"},
+    {key: "K", filename: "K"},
+    {key: "L", filename: "L"},
+    {key: "M", filename: "M"},
+    {key: "N", filename: "N"},
+    {key: "O", filename: "O"},
+    {key: "P", filename: "P"},
+    {key: "Q", filename: "Q"},
+    {key: "R", filename: "R"},
+    {key: "S", filename: "S"},
+    {key: "T", filename: "T"},
+    {key: "U", filename: "U"},
+    {key: "V", filename: "V"},
+    {key: "W", filename: "W"},
+    {key: "X", filename: "X"},
+    {key: "Y", filename: "Y"},
+    {key: "Z", filename: "Z"},
+    {key: "*", filename: "asterisk"},
+    {key: ":", filename: "colon"},
+    {key: ".", filename: "dot"},
+    {key: "/", filename: "slash"}
 ];
-let VALID_KEYS = SOUND_ASSETS.map(el => el.key);
+const FILE_EXTENSION = 'mp3';
+const VALID_KEYS = SOUND_ASSETS.map(el => el.key);
 var IS_PLAYING = false;
 var CURRENT_PLAYING_TIMEOUT = undefined;
 var TEXT_PLAYHEAD_POSITION = 0;
@@ -57,15 +58,24 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 function init(){
     console.log('Running initialization');
+    
+    // Load audio
     startAudioContext();
     loadSoundAssets();
 
+    // Check if text query param is present, and store if this is the case
+    const urlParams = new URLSearchParams(window.location.search);
+    const textParam = urlParams.get('text');
+
+    // Init listeners and set text from query parameter if appropriate
     var textInput = document.getElementById('textInput');
+    if (textParam !== undefined){
+        textInput.value = textParam;
+    }
     textInput.focus();
     textInput.addEventListener("keypress", function(event){
         onKeyPress(event);
     });
-
     var playButton = document.getElementById('playButton');
     playButton.addEventListener("click", function(event){
         play();
@@ -88,6 +98,7 @@ function loadSoundAssets(){
 		console.log('All sounds loaded!');
         loadingIndicator.innerHTML = "";
 	}, function(nDownloaded, total){
+        console.log(`Loading... [${nDownloaded}/${total}]`);
         loadingIndicator.innerHTML = `Loading... [${nDownloaded}/${total}]`;
     });
 }
@@ -112,7 +123,7 @@ function getSoundUrlFromKey(key){
     var foundUrl = undefined;
     SOUND_ASSETS.forEach(el => {
         if (el.key === key){
-            foundUrl = `static/audio/${el.filename}`;
+            foundUrl = `static/audio/${el.filename}.${FILE_EXTENSION}`;
         }
     });
     return foundUrl;
