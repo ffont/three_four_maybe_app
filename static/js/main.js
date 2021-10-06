@@ -47,6 +47,9 @@ let SOUND_ASSETS = [
     {key: "/", filename: "_slash.wav"}
 ];
 let VALID_KEYS = SOUND_ASSETS.map(el => el.key);
+var IS_PLAYING = false;
+var CURRENT_PLAYING_TIMEOUT = undefined;
+var TEXT_PLAYHEAD_POSITION = 0;
 
 document.addEventListener("DOMContentLoaded", function(event) { 
     init();
@@ -61,6 +64,11 @@ function init(){
     textInput.focus();
     textInput.addEventListener("keypress", function(event){
         onKeyPress(event);
+    });
+
+    var playButton = document.getElementById('playButton');
+    playButton.addEventListener("click", function(event){
+        play();
     });
 
 }
@@ -84,7 +92,7 @@ function onKeyPress(event){
     let valid = keyIsValid(keyCharacter);
     if (valid){
         console.log('Playing sound for: ', keyCharacter);
-        playSound(this[keyCharacter], 0);
+        playSoundForKey(keyCharacter);
     } else {
         console.log('No sound for: ', keyCharacter);
     }
@@ -103,4 +111,67 @@ function getSoundUrlFromKey(key){
         }
     });
     return foundUrl;
+}
+
+function playSoundForKey(key){
+    playSound(this[key], 0);
+}
+
+function play(){
+    if (IS_PLAYING){
+        stop();
+    } else {
+        var textInput = document.getElementById('textInput');
+        let text = textInput.value;
+        console.log("Playing text: ", text);
+        var playButton = document.getElementById('playButton');
+        playButton.value = "stop";
+        IS_PLAYING = true;
+        let parsedText = parseText(text);
+        playNextSound(parsedText);
+    }
+}
+
+function stop(){
+    IS_PLAYING = false;
+    TEXT_PLAYHEAD_POSITION = 0;
+    clearTimeout(CURRENT_PLAYING_TIMEOUT);
+    var playButton = document.getElementById('playButton');
+    playButton.value = "play";
+}
+
+function parseText(text){
+    var parsedCharacters = [];
+    for (var i = 0; i < text.length; i++) {
+        let character = text.charAt(i).toUpperCase();
+        let valid = keyIsValid(character);
+        if (valid){
+            parsedCharacters.push(character);
+        } else {
+            parsedCharacters.push(undefined); // Passing undefined will trigger silence
+        }
+    }
+    return parsedCharacters;
+}
+
+function playNextSound(text){
+    console.log('playNextSound ', TEXT_PLAYHEAD_POSITION)
+    if (TEXT_PLAYHEAD_POSITION >= text.length){
+        // We reached end of text, just stop
+        stop();
+    } else {
+        // Play sound and schedule next one
+        let tempoSlider = document.getElementById('tempoSlider');
+        let bpm = tempoSlider.value;
+        var timeIntervalMs = 1000.0 * 60.0 / (bpm * 4);
+        console.log(timeIntervalMs)
+        let key = text[TEXT_PLAYHEAD_POSITION];
+        if (key !== undefined){
+            playSoundForKey(text[TEXT_PLAYHEAD_POSITION]);
+        }
+        TEXT_PLAYHEAD_POSITION += 1;
+        CURRENT_PLAYING_TIMEOUT = setTimeout(() => {
+            playNextSound(text);
+        }, timeIntervalMs);
+    }
 }
