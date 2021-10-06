@@ -20,7 +20,7 @@ function playSound(buffer, time) {
   source.start(time);
 }
 
-function loadSounds(obj, soundMap, callback) {
+function loadSounds(obj, soundMap, callback, downloadPercentageCallback) {
   // Array-ify
   var names = [];
   var paths = [];
@@ -38,16 +38,18 @@ function loadSounds(obj, soundMap, callback) {
     if (callback) {
       callback();
     }
-  });
+  }, downloadPercentageCallback);
   bufferLoader.load();
 }
 
-function BufferLoader(context, urlList, callback) {
+function BufferLoader(context, urlList, callback, downloadPercentageCallback) {
   this.context = context;
   this.urlList = urlList;
   this.onload = callback;
   this.bufferList = new Array();
   this.loadCount = 0;
+  this.downloadCount = 0;
+  this.downloadPercentageCallback = downloadPercentageCallback;
 }
 
 BufferLoader.prototype.loadBuffer = function(url, index) {
@@ -60,6 +62,10 @@ BufferLoader.prototype.loadBuffer = function(url, index) {
 
   request.onload = function() {
     // Asynchronously decode the audio file data in request.response
+    loader.downloadCount += 1;
+    if (loader.downloadPercentageCallback !== undefined){
+      loader.downloadPercentageCallback(loader.downloadCount, loader.urlList.length);
+    }
     loader.context.decodeAudioData(
       request.response,
       function(buffer) {
@@ -68,8 +74,9 @@ BufferLoader.prototype.loadBuffer = function(url, index) {
           return;
         }
         loader.bufferList[index] = buffer;
-        if (++loader.loadCount == loader.urlList.length)
+        if (++loader.loadCount == loader.urlList.length){
           loader.onload(loader.bufferList);
+        }
       },
       function(error) {
         console.error('decodeAudioData error', error);

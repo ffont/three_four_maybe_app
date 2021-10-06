@@ -82,9 +82,14 @@ function loadSoundAssets(){
             soundMap[el.key] = url;
         }
     });
+
+    let loadingIndicator = document.getElementById("loadingIndicator");
 	loadSounds(this, soundMap, function(){
 		console.log('All sounds loaded!');
-	});
+        loadingIndicator.innerHTML = "";
+	}, function(nDownloaded, total){
+        loadingIndicator.innerHTML = `Loading... [${nDownloaded}/${total}]`;
+    });
 }
 
 function onKeyPress(event){
@@ -123,11 +128,11 @@ function play(){
     } else {
         var textInput = document.getElementById('textInput');
         let text = textInput.value;
-        console.log("Playing text: ", text);
         var playButton = document.getElementById('playButton');
         playButton.value = "stop";
         IS_PLAYING = true;
         let parsedText = parseText(text);
+        console.log("Playing parsed text: ", parsedText);
         playNextSound(parsedText);
     }
 }
@@ -155,7 +160,6 @@ function parseText(text){
 }
 
 function playNextSound(text){
-    console.log('playNextSound ', TEXT_PLAYHEAD_POSITION)
     if (TEXT_PLAYHEAD_POSITION >= text.length){
         // We reached end of text, just stop
         stop();
@@ -164,7 +168,6 @@ function playNextSound(text){
         let tempoSlider = document.getElementById('tempoSlider');
         let bpm = tempoSlider.value;
         var timeIntervalMs = 1000.0 * 60.0 / (bpm * 4);
-        console.log(timeIntervalMs)
         let key = text[TEXT_PLAYHEAD_POSITION];
         if (key !== undefined){
             playSoundForKey(text[TEXT_PLAYHEAD_POSITION]);
