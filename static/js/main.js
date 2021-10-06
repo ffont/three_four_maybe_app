@@ -41,10 +41,10 @@ let SOUND_ASSETS = [
     {key: "X", filename: "X.wav"},
     {key: "Y", filename: "Y.wav"},
     {key: "Z", filename: "Z.wav"},
-    {key: "*", filename: "_asterisk.wav"},
-    {key: ":", filename: "_colon.wav"},
-    {key: ".", filename: "_dot.wav"},
-    {key: "/", filename: "_slash.wav"}
+    {key: "*", filename: "asterisk.wav"},
+    {key: ":", filename: "colon.wav"},
+    {key: ".", filename: "dot.wav"},
+    {key: "/", filename: "slash.wav"}
 ];
 let VALID_KEYS = SOUND_ASSETS.map(el => el.key);
 var IS_PLAYING = false;
