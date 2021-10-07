@@ -63,24 +63,68 @@ function init(){
     startAudioContext();
     loadSoundAssets();
 
-    // Check if text query param is present, and store if this is the case
+    // Check if data query param is present, and load data if this is the case
     const urlParams = new URLSearchParams(window.location.search);
-    const textParam = urlParams.get('text');
-
-    // Init listeners and set text from query parameter if appropriate
-    var textInput = document.getElementById('textInput');
-    if (textParam !== undefined){
-        textInput.value = textParam;
+    const dataParam = urlParams.get('data');
+    if (dataParam !== null){
+        loadEncodedData(dataParam);
     }
+
+    // Init listeners
+    var textInput = document.getElementById('textInput');
     textInput.focus();
     textInput.addEventListener("keypress", function(event){
         onKeyPress(event);
     });
+    textInput.addEventListener("input", function(){
+        updateDataUrlParam();
+    })
+
     var playButton = document.getElementById('playButton');
     playButton.addEventListener("click", function(event){
         play();
     });
 
+    const tempoSlider = document.getElementById('tempoSlider');
+    tempoSlider.addEventListener("change", function(){
+        updateDataUrlParam();
+    })
+
+    var shareButton = document.getElementById('shareButton');
+    shareButton.addEventListener("click", function(event){
+        copyShareableURL();
+    });
+}
+
+function loadEncodedData(data){
+    parsedData = JSON.parse(atob(decodeURIComponent(data)));
+    const textInput = document.getElementById('textInput');
+    const tempoSlider = document.getElementById('tempoSlider');
+    if (parsedData.hasOwnProperty("text")){
+        textInput.value = parsedData.text;
+    }
+    if (parsedData.hasOwnProperty("tempo")){
+        tempoSlider.value = parsedData.tempo;
+    }
+}
+
+function generateEncodedData(){
+    const textInput = document.getElementById('textInput');
+    const tempoSlider = document.getElementById('tempoSlider');
+    return encodeURIComponent(btoa(JSON.stringify({
+        text: textInput.value, 
+        tempo: tempoSlider.value
+    })))
+}
+
+function updateDataUrlParam(){
+    const paramValue = generateEncodedData();
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.set('data', paramValue);
+    history.replaceState(null, null, "?"+urlParams.toString());
+    
+    const hiddenCopyInput = document.getElementById('hiddenCopyInput');
+    hiddenCopyInput.value = window.location.href;
 }
 
 function loadSoundAssets(){
@@ -188,4 +232,12 @@ function playNextSound(text){
             playNextSound(text);
         }, timeIntervalMs);
     }
+}
+
+function copyShareableURL(){
+    const hiddenCopyInput = document.getElementById('hiddenCopyInput');
+    hiddenCopyInput.select(); 
+    hiddenCopyInput.setSelectionRange(0, 99999);
+    navigator.clipboard.writeText(hiddenCopyInput.value);
+    alert("Shareable URL copied to clipboard!");
 }
