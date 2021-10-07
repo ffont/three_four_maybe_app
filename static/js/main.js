@@ -127,7 +127,6 @@ function updateDataUrlParam(){
     const urlParams = new URLSearchParams(window.location.search);
     urlParams.set('data', paramValue);
     history.replaceState(null, null, "?"+urlParams.toString());
-    
     const hiddenCopyInput = document.getElementById('hiddenCopyInput');
     hiddenCopyInput.value = window.location.href;
 }
@@ -138,7 +137,7 @@ function loadSoundAssets(){
     SOUND_ASSETS.forEach(el => {
         let url = getSoundUrlFromKey(el.key);
         if (url !== undefined){
-            soundMap[el.key] = url;
+            soundMap['buf_' + el.key] = url;
         }
     });
 
@@ -153,8 +152,7 @@ function loadSoundAssets(){
 }
 
 function onKeyPress(event){
-    let keyCharacter = characterToUppercase(event.key);
-    console.log(keyCharacter, typeof keyCharacter)
+    let keyCharacter = event.key.toUpperCase();
     let valid = keyIsValid(keyCharacter);
     if (valid){
         console.log('Playing sound for: ', keyCharacter);
@@ -180,7 +178,7 @@ function getSoundUrlFromKey(key){
 }
 
 function playSoundForKey(key){
-    playSound(this[key], 0);
+    playSound(this['buf_' + key], 0);
 }
 
 function play(){
@@ -214,7 +212,7 @@ function clear(){
 function parseText(text){
     var parsedCharacters = [];
     for (var i = 0; i < text.length; i++) {
-        let character = characterToUppercase(text.charAt(i));
+        let character = text.charAt(i).toUpperCase();
         let valid = keyIsValid(character);
         if (valid){
             parsedCharacters.push(character);
@@ -223,18 +221,6 @@ function parseText(text){
         }
     }
     return parsedCharacters;
-}
-
-function characterToUppercase(char){
-    // This is a custom uppercase function needed because safari iOS will return a number instead
-    // of a string when calling .toUpperCase() in a number string. This behaviour is different from
-    // safari desktop... 
-    var up = char.toUpperCase();
-    if (typeof up === "number"){
-        return up.toString();
-    } else {
-        return up;
-    }
 }
 
 function playNextSound(text){
