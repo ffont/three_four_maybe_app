@@ -80,9 +80,14 @@ function init(){
         updateDataUrlParam();
     })
 
-    var playButton = document.getElementById('playButton');
+    const playButton = document.getElementById('playButton');
     playButton.addEventListener("click", function(event){
         play();
+    });
+
+    const clearButton = document.getElementById('clearButton');
+    clearButton.addEventListener("click", function(event){
+        clear();
     });
 
     const tempoSlider = document.getElementById('tempoSlider');
@@ -90,7 +95,7 @@ function init(){
         updateDataUrlParam();
     })
 
-    var shareButton = document.getElementById('shareButton');
+    const shareButton = document.getElementById('shareButton');
     shareButton.addEventListener("click", function(event){
         copyShareableURL();
     });
@@ -200,6 +205,11 @@ function stop(){
     playButton.value = "play";
 }
 
+function clear(){
+    var textInput = document.getElementById('textInput');
+    textInput.value = "";
+}
+
 function parseText(text){
     var parsedCharacters = [];
     for (var i = 0; i < text.length; i++) {
@@ -220,7 +230,7 @@ function characterToUppercase(char){
     // safari desktop... 
     var up = char.toUpperCase();
     if (typeof up === "number"){
-        return parseInt(up, 10);
+        return up.toString();
     } else {
         return up;
     }
