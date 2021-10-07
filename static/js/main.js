@@ -148,7 +148,7 @@ function loadSoundAssets(){
 }
 
 function onKeyPress(event){
-    let keyCharacter = event.key.toUpperCase();
+    let keyCharacter = characterToUppercase(event.key);
     let valid = keyIsValid(keyCharacter);
     if (valid){
         console.log('Playing sound for: ', keyCharacter);
@@ -203,7 +203,7 @@ function stop(){
 function parseText(text){
     var parsedCharacters = [];
     for (var i = 0; i < text.length; i++) {
-        let character = text.charAt(i).toUpperCase();
+        let character = characterToUppercase(text.charAt(i));
         let valid = keyIsValid(character);
         if (valid){
             parsedCharacters.push(character);
@@ -212,6 +212,18 @@ function parseText(text){
         }
     }
     return parsedCharacters;
+}
+
+function characterToUppercase(char){
+    // This is a custom uppercase function needed because safari iOS will return a number instead
+    // of a string when calling .toUpperCase() in a number string. This behaviour is different from
+    // safari desktop... 
+    var up = char.toUpperCase();
+    if (typeof up === "number"){
+        return parseInt(up, 10);
+    } else {
+        return up;
+    }
 }
 
 function playNextSound(text){
