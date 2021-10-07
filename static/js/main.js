@@ -154,6 +154,7 @@ function loadSoundAssets(){
 
 function onKeyPress(event){
     let keyCharacter = characterToUppercase(event.key);
+    console.log(keyCharacter, typeof keyCharacter)
     let valid = keyIsValid(keyCharacter);
     if (valid){
         console.log('Playing sound for: ', keyCharacter);
