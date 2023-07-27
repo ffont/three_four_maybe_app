@@ -1,4 +1,4 @@
-const SOUND_ASSETS = [
+const SOUND_ASSETS2 = [
     {key: "#", filename: "hash"},
     {key: "'", filename: "'"},
     {key: "(", filename: "("},
@@ -46,6 +46,12 @@ const SOUND_ASSETS = [
     {key: ".", filename: "dot"},
     {key: "/", filename: "slash"}
 ];
+
+const SOUND_ASSETS = [
+    {key: "#", filename: "hash"},
+    {key: "'", filename: "'"}
+]
+
 const FILE_EXTENSION = 'mp3';
 const VALID_KEYS = SOUND_ASSETS.map(el => el.key);
 var IS_PLAYING = false;
@@ -99,6 +105,22 @@ function init(){
     shareButton.addEventListener("click", function(event){
         share();
     });
+
+    setInterval(function() {
+        const wrapper = document.getElementsByClassName('rectWrapper')[0];
+        console.log(wrapper, "hey")
+        for (i=0; i<wrapper.childElementCount; i++){
+            const rect = wrapper.children[i];
+            var items = [
+                'rect on',
+                'rect off',
+                'rect on half',
+            ]
+            var item = items[Math.floor(Math.random()*items.length)];
+            rect.className = item;
+            
+        }
+    }, 500)
 }
 
 function loadEncodedData(data){
