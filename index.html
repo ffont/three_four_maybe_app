@@ -3,26 +3,33 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>three four maybe app</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital@0;1&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="static/css/all.css">
     </head>
     <body>
         <div class="logo"></div>
-        <h1>three four maybe app</h1>
         <div id="loadingIndicator">Loading...</div>
-        <textarea id="textInput" placeholder="Start typing here..."></textarea>
-        <div class="font">
-            El aire es inmortal. La piedra inerte ni conoce la sombra ni la evita. Corazón interior no necesita la miel helada que la luna vierte
-        </div>
         <div class="rectWrapper">
-            <div class="rect on"></div>
             <div class="rect off"></div>
-            <div class="rect on"></div>
-            <div class="rect on half"></div>
             <div class="rect off"></div>
-            <div class="rect on"></div>
-            <div class="rect on half"></div>
             <div class="rect off"></div>
-            <div class="rect on"></div>
+            <div class="rect off"></div>
+            <div class="rect off"></div>
+            <div class="rect off"></div>
+            <div class="rect off"></div>
+            <div class="rect off"></div>
+            <div class="rect off"></div>
+            <div class="rect off"></div>
+            <div class="rect off"></div>
+            <div class="rect off"></div>
+            <div class="rect off"></div>
+            <div class="rect off"></div>
+            <div class="rect off"></div>
+            <div class="rect off"></div>
+            <div class="rect off"></div>
+            <div class="rect off"></div>
         </div>
         <input id="tempoSlider" type="range" min="40" max="300" value="113"/>
         <input id="playButton" type="button" value="play"/>
@@ -33,11 +40,14 @@
         <div style="background-color: black;">
             <div class="playIcon"></div><br>
             <div class="pauseIcon"></div><br>
-            <div class="loopIcon"></div>
-            
+            <div class="loopIcon"></div>  
         </div>
         <div>
             <div class="folderIcon"></div>
+        </div>
+        <div>
+            <span id="placeholder">Start typing your message here...</span>
+            <div id="textInput" class="formattedInput" contenteditable="true" spellcheck="false"></div>
         </div>
     </body>
     <script src="static/js/audioengine.js"></script>

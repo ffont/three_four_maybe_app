@@ -1,19 +1,5 @@
-.body {
-    background-color: white;
-}
-
-@font-face {
-    font-family: CousineRegular;
-    src: url(/static/assets/Cousine-Regular.ttf);
-}
-
-.font {
-    font-family: CousineRegular;
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 30px;
-    letter-spacing: 0em;
-    text-align: left;    
+body {
+    background-color: #f1f1f1;
 }
 
 .rectWrapper {
@@ -29,12 +15,12 @@
 }
 
 .on {
-    background-color: black;
+    background-color: #000;
     transition: linear 0.25s;
 }
 
 .off {
-    background-color: white;
+    background-color: #f1f1f1;
     transition: linear 0.25s;
 }
 
@@ -77,8 +63,40 @@
     height: 20px;
 }
 
-textarea { 
-    text-transform: uppercase; 
-    height: 60px;
-    width: 300px;
+.formattedInput {
+    width: 400px;
+    height: 200px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 30px;
+    letter-spacing: 0em;
+    text-align: left;
+    background-color: #f1f1f1;
+    color: #000;
+    box-shadow: none!important;
+    border: 0;
+    resize: none;
+    display: inline-block
+}
+
+.formattedInput:focus
+{
+    outline: none;
+}
+
+#placeholder {
+    font-style: italic;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 30px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #000;
+}
+
+.textAnimated {
+    background-color:black;
+    color:#f1f1f1;
 }
