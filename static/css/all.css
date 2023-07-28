@@ -16,12 +16,12 @@ body {
 
 .on {
     background-color: #000;
-    transition: linear 0.25s;
+    transition: linear 0.05s;
 }
 
 .off {
     background-color: #f1f1f1;
-    transition: linear 0.25s;
+    transition: linear 0.05s;
 }
 
 .half {

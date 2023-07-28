@@ -302,22 +302,23 @@ function playNextSound(){
 }
 
 function getRectaglesOnForKey(key){
+    var rects = []
     SOUND_ASSETS.forEach(el => {
         if (el.key === key){
-            console.log("HEY")
-            return el.solenoids;
+            rects = el.solenoids;
         }
     });
-    return [];
+    return rects;
 }
 
 function getRectaglesOnHalfForKey(key){
+    var rects = []
     SOUND_ASSETS.forEach(el => {
         if (el.key === key){
-            return el.solenoidsH;
+            rects = el.solenoidsH;
         }
     });
-    return [];
+    return rects;
 }
 
 function updateRectangles(){
@@ -327,11 +328,12 @@ function updateRectangles(){
         rectsOn = getRectaglesOnForKey(text[TEXT_PLAYHEAD_POSITION]);
         rectsOnH = getRectaglesOnHalfForKey(text[TEXT_PLAYHEAD_POSITION]);
     }
-    for (i=1; i==rectaglesWrapper.childElementCount; i++){
-        const rect = rectaglesWrapper.children[i - 1];
-        if (rectsOn.includes(i)){
+    const rectDivs = rectaglesWrapper.getElementsByClassName('rect');
+    for (var i=0; i<rectDivs.length; i++){
+        const rect = rectDivs[i];
+        if (rectsOn.includes(i + 1)){
             rect.className = 'rect on';
-        } else if (rectsOnH.includes(i)){
+        } else if (rectsOnH.includes(i + 1)){
             rect.className = 'rect on half';
         } else {
             rect.className = 'rect off';
