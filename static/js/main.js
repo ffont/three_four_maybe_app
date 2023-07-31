@@ -85,6 +85,12 @@ var IS_LOOPING = true;
 const placeholder = document.getElementById('placeholder');
 const textInput = document.getElementById('textInput');
 const rectaglesWrapper = document.getElementsByClassName('rectWrapper')[0];
+const playButton = document.getElementById('playButton');
+const loopButton = document.getElementById('loopButton');
+const tempoSlider = document.getElementsByName('tempoSlider')[0];
+const playButtonLabel = document.getElementById('playButtonLabel');
+const loopButtonLabel = document.getElementById('loopButtonLabel');
+const tempoSliderLabel = document.getElementById('selectLabel');
 
 document.addEventListener("DOMContentLoaded", function(event) { 
     init();
@@ -105,6 +111,12 @@ function init(){
     }
 
     setPlaceholderIfNeeded();
+
+    if (IS_LOOPING){
+        loopButton.classList.add('active');
+    } else {
+        loopButton.classList.remove('active');
+    }
 
     // Init listeners
     textInput.addEventListener("keypress", function(event){
@@ -127,25 +139,32 @@ function init(){
         textInput.focus();
     });
 
-    const playButton = document.getElementById('playButton');
     playButton.addEventListener("click", function(event){
         play();
     });
 
-    const clearButton = document.getElementById('clearButton');
-    clearButton.addEventListener("click", function(event){
-        clear();
+    loopButton.addEventListener("click", function(event){
+        IS_LOOPING = !IS_LOOPING;
+        if (IS_LOOPING){
+            loopButton.classList.add('active');
+        } else {
+            loopButton.classList.remove('active');
+        }
     });
 
-    const tempoSlider = document.getElementById('tempoSlider');
+    //const clearButton = document.getElementById('clearButton');
+    //clearButton.addEventListener("click", function(event){
+    //    clear();
+    //});
+
     tempoSlider.addEventListener("change", function(){
         updateDataUrlParam();
     })
 
-    const shareButton = document.getElementById('shareButton');
-    shareButton.addEventListener("click", function(event){
-        share();
-    });
+    //const shareButton = document.getElementById('shareButton');
+    //shareButton.addEventListener("click", function(event){
+    //    share();
+    //});
 
     // Start focusing the text input
     textInput.focus();
@@ -153,7 +172,6 @@ function init(){
 
 function loadEncodedData(data){
     parsedData = JSON.parse(atob(decodeURIComponent(data)));
-    const tempoSlider = document.getElementById('tempoSlider');
     if (parsedData.hasOwnProperty("text")){
         textInput.innerText = parsedData.text;
     }
@@ -163,7 +181,6 @@ function loadEncodedData(data){
 }
 
 function generateEncodedData(){
-    const tempoSlider = document.getElementById('tempoSlider');
     return encodeURIComponent(btoa(JSON.stringify({
         text: textInput.innerText, 
         tempo: tempoSlider.value
@@ -236,8 +253,8 @@ function play(){
     if (IS_PLAYING){
         stop();
     } else {
-        var playButton = document.getElementById('playButton');
-        playButton.value = "stop";
+        playButton.className = 'pauseIcon';
+        playButtonLabel.innerText = 'pause'
         IS_PLAYING = true;
         playNextSound();
     }
@@ -249,8 +266,8 @@ function stop(){
     setInputTextAnimationPosition(0);
     updateRectangles();
     clearTimeout(CURRENT_PLAYING_TIMEOUT);
-    var playButton = document.getElementById('playButton');
-    playButton.value = "play";
+    playButton.className = 'playIcon';
+    playButtonLabel.innerText = 'play'
 }
 
 function clear(){
@@ -285,7 +302,6 @@ function playNextSound(){
         }
     } else {
         // Play sound, set animtion and schedule next one
-        let tempoSlider = document.getElementById('tempoSlider');
         let bpm = tempoSlider.value;
         var timeIntervalMs = 1000.0 * 60.0 / (bpm * 4);
         let key = text[TEXT_PLAYHEAD_POSITION];

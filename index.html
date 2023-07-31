@@ -6,50 +6,91 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital@0;1&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
         <link rel="stylesheet" href="static/css/all.css">
     </head>
     <body>
-        <div class="logo"></div>
-        <div id="loadingIndicator">Loading...</div>
-        <div class="rectWrapper">
-            <div class="rect off"></div>
-            <div class="rect off"></div>
-            <div class="rect off"></div>
-            <div class="rect off"></div>
-            <div class="rect off"></div>
-            <div class="rect off"></div>
-            <div class="rect off"></div>
-            <div class="rect off"></div>
-            <div class="rect off"></div>
-            <div class="rect off"></div>
-            <div class="rect off"></div>
-            <div class="rect off"></div>
-            <div class="rect off"></div>
-            <div class="rect off"></div>
-            <div class="rect off"></div>
-            <div class="rect off"></div>
-            <div class="rect off"></div>
-            <div class="rect off"></div>
-        </div>
-        <input id="tempoSlider" type="range" min="40" max="300" value="113"/>
-        <input id="playButton" type="button" value="play"/>
-        <input id="clearButton" type="button" value="clear"/>
-        <input id="shareButton" type="button" value="share"/>
-        <input id="hiddenCopyInput" type="text" style="display:none";/>
-        <br>
-        <div style="background-color: black;">
-            <div class="playIcon"></div><br>
-            <div class="pauseIcon"></div><br>
-            <div class="loopIcon"></div>  
-        </div>
-        <div>
-            <div class="folderIcon"></div>
-        </div>
-        <div>
-            <span id="placeholder">Start typing your message here...</span>
-            <div id="textInput" class="formattedInput" contenteditable="true" spellcheck="false"></div>
-        </div>
+        <div class="frame">
+            <div class="title">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="logo"></div>
+                    </div>
+                    <div class="col-6">
+                        <div class="justify-content-end">
+                            <div class="folderIcon"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="body">
+                <div style="display:none;" id="loadingIndicator">Loading...</div>
+                <div class="rectWrapper">
+                    <div class="rect off"></div>
+                    <div class="rect off"></div>
+                    <div class="rect off"></div>
+                    <div class="rect off"></div>
+                    <div class="rect off"></div>
+                    <div class="rect off"></div>
+                    <div class="rect off"></div>
+                    <div class="rect off"></div>
+                    <div class="rect off"></div>
+                    <div class="rect off"></div>
+                    <div class="rect off"></div>
+                    <div class="rect off"></div>
+                    <div class="rect off"></div>
+                    <div class="rect off"></div>
+                    <div class="rect off"></div>
+                    <div class="rect off"></div>
+                    <div class="rect off"></div>
+                    <div class="rect off"></div>
+                </div>
+                <div>
+                    <span id="placeholder">Start typing your message here...</span>
+                    <div id="textInput" class="formattedInput" contenteditable="true" spellcheck="false"></div>
+                </div>
+            </div>
+            <div class="footer">
+                <div class="col-12 col-md-4 offset-md-4">
+                    <div class="row">
+                        <div class="col-4">
+                            <div>
+                                <div>
+                                    <select name="tempoSlider">
+                                        <option value="120">C2</option>
+                                        <option value="130">C3</option>
+                                        <option value="140">C4</option>
+                                        <option value="150">C5</option>
+                                    </select>
+                                </div>
+                                <div id="selectLabel" class="buttonLabel">speed</div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div>
+                                <div id="playButton" class="playIcon"></div>
+                                <div id="playButtonLabel" class="buttonLabel">play</div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div>
+                                <div id="loopButton" class="loopIcon"></div>
+                                <div id="loopButtonLabel" class="buttonLabel">loop</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!--
+                <input id="tempoSlider" type="range" min="40" max="300" value="113"/>
+                <input id="playButton" type="button" value="play"/>
+                <input id="clearButton" type="button" value="clear"/>
+                <input id="shareButton" type="button" value="share"/>-->
+                <input id="hiddenCopyInput" type="text" style="display:none";/>
+            </div>
+         <div>
     </body>
+    <!--script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script-->
     <script src="static/js/audioengine.js"></script>
     <script src="static/js/main.js"></script>
 </html>
