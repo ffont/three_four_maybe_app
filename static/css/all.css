@@ -62,14 +62,14 @@ body {
 }
 
 .logo {
-    background-image: url('/static/assets/logo.svg');
+    background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/logo.svg');
     background-repeat: no-repeat;
     background-size: contain;
     height: 30px;
 }
 
 .playIcon {
-    background-image: url('/static/assets/play.fill.png');
+    background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/play.fill.png');
     background-repeat: no-repeat;
     background-size: contain;
     height: 30px;
@@ -79,7 +79,7 @@ body {
 }
 
 .pauseIcon {
-    background-image: url('/static/assets/pause.fill.png');
+    background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/pause.fill.png');
     background-repeat: no-repeat;
     background-size: contain;
     height: 30px;
@@ -89,7 +89,7 @@ body {
 }
 
 .loopIcon {
-    background-image: url('/static/assets/loop.svg');
+    background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/loop.svg');
     background-repeat: no-repeat;
     background-size: contain;
     height: 20px;
@@ -105,7 +105,7 @@ body {
 }    
 
 .folderIcon {
-    background-image: url('/static/assets/folder.svg');
+    background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/folder.svg');
     background-repeat: no-repeat;
     background-size: contain;
     height: 20px;
