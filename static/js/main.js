@@ -74,6 +74,13 @@ const SOUND_ASSETS = [
     {key: "Z", filename: "Z", solenoids: [3, 5], solenoidsH: []}
 ]
 
+const defaultTexts = [
+    "sdgdfg",
+    "cxgd g dgf fd h",
+    "dgj vj sh vs  sfhs hf sdjfh sjhf js bf fjhs b"
+]
+console.log(defaultTexts)
+
 const FILE_EXTENSION = 'mp3';
 const KEYS_WITH_SOUNDS = SOUND_ASSETS.map(el => el.key);
 const VALID_KEYS = KEYS_WITH_SOUNDS + [' '];
@@ -91,6 +98,10 @@ const tempoSlider = document.getElementsByName('tempoSlider')[0];
 const playButtonLabel = document.getElementById('playButtonLabel');
 const loopButtonLabel = document.getElementById('loopButtonLabel');
 const tempoSliderLabel = document.getElementById('selectLabel');
+const menuToggle = document.getElementById('menuToggle');
+const folderMenu = document.getElementById('folderMenu');
+const menuCloseButton = document.getElementById('menuCloseButton');
+const menuOptionsWrapper = document.getElementById('menuOptionsWrapper');
 
 document.addEventListener("DOMContentLoaded", function(event) { 
     init();
@@ -166,8 +177,33 @@ function init(){
     //    share();
     //});
 
+    menuToggle.addEventListener("click", function(event){
+        folderMenu.classList.remove("menu-hidden");
+    });
+
+    for (var i = 0; i < defaultTexts.length; i++) {
+        var text = defaultTexts[i];
+        var html = '<div class="menu-option">' + text + '</div>';
+        menuOptionsWrapper.innerHTML += html;
+    }
+
+    const optionElements = document.getElementsByClassName("menu-option");
+    for (var i = 0; i < optionElements.length; i++) {
+        var option = optionElements[i];
+        option.addEventListener("click", function(event){
+            textInput.innerText = event.target.innerText;
+            updateDataUrlParam();
+            setPlaceholderIfNeeded();
+            folderMenu.classList.add("menu-hidden");
+        });
+    }
+
+    menuCloseButton.addEventListener("click", function(event){
+        folderMenu.classList.add("menu-hidden");
+    });
+
     // Start focusing the text input
-    textInput.focus();
+    //textInput.focus();
 }
 
 function loadEncodedData(data){
@@ -264,14 +300,15 @@ function stop(){
     IS_PLAYING = false;
     TEXT_PLAYHEAD_POSITION = 0;
     setInputTextAnimationPosition(0);
-    updateRectangles();
     clearTimeout(CURRENT_PLAYING_TIMEOUT);
     playButton.className = 'playIcon';
     playButtonLabel.innerText = 'play'
+    updateRectangles();
 }
 
 function clear(){
     textInput.innerText = "";
+    updateRectangles();
 }
 
 function parseText(text){
@@ -340,6 +377,7 @@ function getRectaglesOnHalfForKey(key){
 function updateRectangles(){
     let text = parseText(textInput.innerText);  // This parse here won't be needed if done on edit events
     var rectsOn = []
+    var rectsOnH = []
     if (IS_PLAYING){
         rectsOn = getRectaglesOnForKey(text[TEXT_PLAYHEAD_POSITION]);
         rectsOnH = getRectaglesOnHalfForKey(text[TEXT_PLAYHEAD_POSITION]);
