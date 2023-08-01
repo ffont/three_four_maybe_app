@@ -79,7 +79,6 @@ const defaultTexts = [
     "cxgd g dgf fd h",
     "dgj vj sh vs  sfhs hf sdjfh sjhf js bf fjhs b"
 ]
-console.log(defaultTexts)
 
 const FILE_EXTENSION = 'mp3';
 const KEYS_WITH_SOUNDS = SOUND_ASSETS.map(el => el.key);
@@ -87,7 +86,7 @@ const VALID_KEYS = KEYS_WITH_SOUNDS + [' '];
 var IS_PLAYING = false;
 var CURRENT_PLAYING_TIMEOUT = undefined;
 var TEXT_PLAYHEAD_POSITION = 0;
-var IS_LOOPING = true;
+var IS_LOOPING = false;
 
 const placeholder = document.getElementById('placeholder');
 const textInput = document.getElementById('textInput');
