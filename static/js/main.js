@@ -87,6 +87,9 @@ var IS_PLAYING = false;
 var CURRENT_PLAYING_TIMEOUT = undefined;
 var TEXT_PLAYHEAD_POSITION = 0;
 var IS_LOOPING = false;
+var PASTE_PLAY_SPEED = 30;
+var PASTE_NUM_LAST_CHARS = 10;
+var SHOW_LOADING_SCREEN = true;
 
 const placeholder = document.getElementById('placeholder');
 const textInput = document.getElementById('textInput');
@@ -101,6 +104,7 @@ const menuToggle = document.getElementById('menuToggle');
 const folderMenu = document.getElementById('folderMenu');
 const menuCloseButton = document.getElementById('menuCloseButton');
 const menuOptionsWrapper = document.getElementById('menuOptionsWrapper');
+const loadingScreen = document.getElementById('loadingScreen')
 
 document.addEventListener("DOMContentLoaded", function(event) { 
     init();
@@ -108,7 +112,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 function init(){
     console.log('Running initialization');
-    
+
+    if (SHOW_LOADING_SCREEN){
+        loadingScreen.classList.remove('menu-hidden');
+    }
+        
     // Load audio
     startAudioContext();
     loadSoundAssets();
@@ -138,6 +146,15 @@ function init(){
     textInput.addEventListener("input", function(){
         updateDataUrlParam();
     })
+    textInput.addEventListener("paste", function(e){
+        const pasteText = (e.originalEvent || e).clipboardData.getData('text/plain');
+        setTimeout(function(){
+            setText(textInput.innerText); // Force re-draw to remove format
+            if (!IS_PLAYING){
+                playMultipleChars(pasteText);  // Play last chars if pasting
+            }
+        }, 20);
+    })
     textInput.addEventListener("focusin", function(){
         placeholder.style.display = "none";
     });
@@ -150,7 +167,10 @@ function init(){
     });
 
     playButton.addEventListener("click", function(event){
-        play();
+        if (!playButton.classList.contains("disabled")){
+            play();
+        }
+        
     });
 
     loopButton.addEventListener("click", function(event){
@@ -190,9 +210,7 @@ function init(){
     for (var i = 0; i < optionElements.length; i++) {
         var option = optionElements[i];
         option.addEventListener("click", function(event){
-            textInput.innerText = event.target.innerText;
-            updateDataUrlParam();
-            setPlaceholderIfNeeded();
+            setText(event.target.innerText);
             folderMenu.classList.add("menu-hidden");
         });
     }
@@ -205,10 +223,37 @@ function init(){
     //textInput.focus();
 }
 
+function setText(text){
+    textInput.innerText = parseText(text);
+    updateDataUrlParam();
+    setPlaceholderIfNeeded();
+    setInputTextAnimationPosition(0); // This re-draws text and removes existing formatting (useful when pasting for example)
+    textInput.blur(); // Remove focus so caret dissapears
+    if (IS_PLAYING){
+        stop();
+        play();
+    }
+}
+
+function playMultipleChars(text){
+    // Play the sounds for the last 5 characters very fast
+    const lastChars = text.slice(-PASTE_NUM_LAST_CHARS);
+    for (var i=0; i<lastChars.length; i++){
+        const char = lastChars[i];
+        setTimeout(function(){
+            playSoundForKey(char);
+            displayRectanglesPerKey(char);
+        }, i * PASTE_PLAY_SPEED);
+    }
+    setTimeout( function(){
+        displayRectanglesPerKey(undefined);
+    }, (lastChars.length + 1) * PASTE_PLAY_SPEED);
+}
+
 function loadEncodedData(data){
     parsedData = JSON.parse(atob(decodeURIComponent(data)));
     if (parsedData.hasOwnProperty("text")){
-        textInput.innerText = parsedData.text;
+        setText(parsedData.text);
     }
     if (parsedData.hasOwnProperty("tempo")){
         tempoSlider.value = parsedData.tempo;
@@ -243,21 +288,32 @@ function loadSoundAssets(){
 
     let loadingIndicator = document.getElementById("loadingIndicator");
 	loadSounds(this, soundMap, function(){
+        playButton.classList.remove("disabled");
 		console.log('All sounds loaded!');
         loadingIndicator.innerHTML = "";
+        if (SHOW_LOADING_SCREEN){
+            loadingScreen.classList.add('menu-hidden');
+        }
 	}, function(nDownloaded, total){
         console.log(`Loading... [${nDownloaded}/${total}]`);
         loadingIndicator.innerHTML = `Loading... [${nDownloaded}/${total}]`;
+        if (SHOW_LOADING_SCREEN){            
+            loadingScreen.innerHTML = `<div style="margin-top:20%;">Loading... [${nDownloaded}/${total}]</div>`;
+        }
     });
 }
 
 function onKeyPress(event){
     let keyCharacter = event.key; //.toUpperCase();
-    if (keyHasSound(keyCharacter)){
-        console.log('Playing sound for: ', keyCharacter);
+    if (keyHasSound(keyCharacter) && !IS_PLAYING){
+        //console.log('Playing sound for: ', keyCharacter);
         playSoundForKey(keyCharacter);
+        displayRectanglesPerKey(keyCharacter);
+        setTimeout( function(){
+            displayRectanglesPerKey(undefined);
+        }, 100);
     } else {
-        console.log('No sound for: ', keyCharacter);
+        //console.log('No sound for: ', keyCharacter);
     }
     return keyIsValid(keyCharacter);
 }
@@ -311,6 +367,7 @@ function clear(){
 }
 
 function parseText(text){
+    // Remove unsupported characters
     var parsedCharacters = [];
     for (var i = 0; i < text.length; i++) {
         let character = text.charAt(i); //.toUpperCase();
@@ -321,11 +378,11 @@ function parseText(text){
             parsedCharacters.push(undefined); // Passing undefined will trigger silence
         }
     }
-    return parsedCharacters;
+    return parsedCharacters.join('');
 }
 
 function playNextSound(){
-    let text = parseText(textInput.innerText);  // This parse here won't be needed if done on edit events
+    let text = textInput.innerText;
     if (TEXT_PLAYHEAD_POSITION > text.length){
         // We reached end of text, loop or stop
         if (IS_LOOPING) {
@@ -373,13 +430,12 @@ function getRectaglesOnHalfForKey(key){
     return rects;
 }
 
-function updateRectangles(){
-    let text = parseText(textInput.innerText);  // This parse here won't be needed if done on edit events
+function displayRectanglesPerKey(key){
     var rectsOn = []
     var rectsOnH = []
-    if (IS_PLAYING){
-        rectsOn = getRectaglesOnForKey(text[TEXT_PLAYHEAD_POSITION]);
-        rectsOnH = getRectaglesOnHalfForKey(text[TEXT_PLAYHEAD_POSITION]);
+    if (key !== undefined){
+        rectsOn = getRectaglesOnForKey(key);
+        rectsOnH = getRectaglesOnHalfForKey(key);
     }
     const rectDivs = rectaglesWrapper.getElementsByClassName('rect');
     for (var i=0; i<rectDivs.length; i++){
@@ -391,7 +447,17 @@ function updateRectangles(){
         } else {
             rect.className = 'rect off';
         }
-    }        
+    }
+}
+
+function updateRectangles(){
+    const text = textInput.innerText;
+    const key = text[TEXT_PLAYHEAD_POSITION];
+    if (IS_PLAYING){
+        displayRectanglesPerKey(key);
+    } else {
+        displayRectanglesPerKey(undefined); // To set them empty
+    }
 }
 
 function share(){

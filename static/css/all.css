@@ -61,6 +61,11 @@ body {
     opacity: 0.5;
 }
 
+.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 .logo {
     background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/logo.svg');
     background-repeat: no-repeat;
