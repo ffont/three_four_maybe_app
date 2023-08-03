@@ -74,6 +74,12 @@ const SOUND_ASSETS = [
     {key: "Z", filename: "Z", solenoids: [3, 5], solenoidsH: []}
 ]
 
+const SOUND_ASSETS_DEBUG = [
+    {key: "#", filename: "hash", solenoids: [14, 16, 17, 18], solenoidsH: []},
+    {key: "/", filename: "slash", solenoids: [], solenoidsH: [7, 17, 18]},
+    {key: ")", filename: ")", solenoids: [], solenoidsH: [8, 17]}
+]   
+
 const defaultTexts = [
     "sdgdfg",
     "cxgd g dgf fd h",
@@ -147,13 +153,24 @@ function init(){
         updateDataUrlParam();
     })
     textInput.addEventListener("paste", function(e){
-        const pasteText = (e.originalEvent || e).clipboardData.getData('text/plain');
+        e.preventDefault();
+        let pasteText = (e.originalEvent || e).clipboardData.getData('text/plain');
+        pasteText = parseText(pasteText);
+        
+        /*let offset = Cursor.getCurrentCursorPosition(textInput);
+        const textBefore = textInput.innerText.substring(0, offset);
+        const textAfter = textInput.innerText.substring(offset, text.length);
+        textInput.innerText =  textBefore + pasteText + textAfter;
+        Cursor.setCurrentCursorPosition(offset + pasteText.length, textInput);
+        */
+        document.execCommand('inserttext', false, pasteText);
+    
         setTimeout(function(){
-            setText(textInput.innerText); // Force re-draw to remove format
             if (!IS_PLAYING){
                 playMultipleChars(pasteText);  // Play last chars if pasting
             }
         }, 20);
+        return false;
     })
     textInput.addEventListener("focusin", function(){
         placeholder.style.display = "none";
@@ -211,6 +228,10 @@ function init(){
         var option = optionElements[i];
         option.addEventListener("click", function(event){
             setText(event.target.innerText);
+            if (IS_PLAYING){
+                stop();
+                play();
+            } 
             folderMenu.classList.add("menu-hidden");
         });
     }
@@ -227,12 +248,6 @@ function setText(text){
     textInput.innerText = parseText(text);
     updateDataUrlParam();
     setPlaceholderIfNeeded();
-    setInputTextAnimationPosition(0); // This re-draws text and removes existing formatting (useful when pasting for example)
-    textInput.blur(); // Remove focus so caret dissapears
-    if (IS_PLAYING){
-        stop();
-        play();
-    }
 }
 
 function playMultipleChars(text){
