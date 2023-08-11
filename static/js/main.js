@@ -1,15 +1,15 @@
 const SOUND_ASSETS = [
-    {key: "#", filename: "hash", solenoids: [14, 16, 17, 18], solenoidsH: []},
-    {key: "/", filename: "slash", solenoids: [], solenoidsH: [7, 17, 18]},
+    {key: "#", filename: "_hash", solenoids: [14, 16, 17, 18], solenoidsH: []},
+    {key: "/", filename: "_slash", solenoids: [], solenoidsH: [7, 17, 18]},
     {key: ")", filename: ")", solenoids: [], solenoidsH: [8, 17]},
     {key: "=", filename: "=", solenoids: [16], solenoidsH: [14]},
     {key: "(", filename: "(", solenoids: [], solenoidsH: [7, 18]},
     {key: ",", filename: ",", solenoids: [14], solenoidsH: [8]},
-    {key: ".", filename: "dot", solenoids: [12], solenoidsH: [5]},
-    {key: "*", filename: "asterisk", solenoids: [], solenoidsH: [17, 18]},
-    {key: ":", filename: "colon", solenoids: [10, 11], solenoidsH: []},
+    {key: ".", filename: "_dot", solenoids: [12], solenoidsH: [5]},
+    {key: "*", filename: "_asterisk", solenoids: [], solenoidsH: [17, 18]},
+    {key: ":", filename: "_colon", solenoids: [10, 11], solenoidsH: []},
     {key: "'", filename: "'", solenoids: [14], solenoidsH: [17]},
-    {key: '"', filename: "0", solenoids: [14], solenoidsH: [17]},  // MISSING, using placeholder
+    {key: '"', filename: '"', solenoids: [14], solenoidsH: [17]},
     {key: "0", filename: "0", solenoids: [7], solenoidsH: []},
     {key: "1", filename: "1", solenoids: [], solenoidsH: [8]},
     {key: "2", filename: "2", solenoids: [17], solenoidsH: []},
@@ -20,70 +20,85 @@ const SOUND_ASSETS = [
     {key: "7", filename: "7", solenoids: [], solenoidsH: [9]},
     {key: "8", filename: "8", solenoids: [12], solenoidsH: []},
     {key: "9", filename: "9", solenoids: [], solenoidsH: [5, 6]},
-    {key: "a", filename: "A", solenoids: [11], solenoidsH: []},  // MISSING, using placeholder
-    {key: "A", filename: "A", solenoids: [11], solenoidsH: []},
-    {key: "b", filename: "B", solenoids: [2], solenoidsH: [4]},  // MISSING, using placeholder
-    {key: "B", filename: "B", solenoids: [2, 4], solenoidsH: []},
-    {key: "c", filename: "C", solenoids: [], solenoidsH: [4]},  // MISSING, using placeholder
-    {key: "C", filename: "C", solenoids: [4], solenoidsH: []},
-    {key: "d", filename: "D", solenoids: [2], solenoidsH: [5]},  // MISSING, using placeholder
-    {key: "D", filename: "D", solenoids: [2, 5], solenoidsH: []},
-    {key: "e", filename: "E", solenoids: [13], solenoidsH: []},  // MISSING, using placeholder
-    {key: "E", filename: "E", solenoids: [13], solenoidsH: []},
-    {key: "f", filename: "F", solenoids: [1, 2], solenoidsH: []},  // MISSING, using placeholder
-    {key: "F", filename: "F", solenoids: [1, 2], solenoidsH: []},
-    {key: "g", filename: "G", solenoids: [2], solenoidsH: [6]},  // MISSING, using placeholder
-    {key: "G", filename: "G", solenoids: [2, 6], solenoidsH: []},
-    {key: "h", filename: "H", solenoids: [1], solenoidsH: []},  // MISSING, using placeholder
-    {key: "H", filename: "H", solenoids: [1], solenoidsH: []},
-    {key: "i", filename: "I", solenoids: [12], solenoidsH: []},  // MISSING, using placeholder
-    {key: "I", filename: "I", solenoids: [12], solenoidsH: []},
-    {key: "j", filename: "J", solenoids: [], solenoidsH: [4, 5]},  // MISSING, using placeholder
-    {key: "J", filename: "J", solenoids: [4, 5], solenoidsH: []},
-    {key: "k", filename: "K", solenoids: [], solenoidsH: [4, 5]},  // MISSING, using placeholder
-    {key: "K", filename: "K", solenoids: [4, 5], solenoidsH: []},
-    {key: "l", filename: "L", solenoids: [2], solenoidsH: []},  // MISSING, using placeholder
-    {key: "L", filename: "L", solenoids: [2], solenoidsH: []},
-    {key: "m", filename: "M", solenoids: [], solenoidsH: [4, 6]},  // MISSING, using placeholder
-    {key: "M", filename: "M", solenoids: [4, 6], solenoidsH: []},
-    {key: "n", filename: "N", solenoids: [], solenoidsH: [5]},  // MISSING, using placeholder
-    {key: "N", filename: "N", solenoids: [5], solenoidsH: []},
-    {key: "o", filename: "O", solenoids: [13], solenoidsH: []},  // MISSING, using placeholder
-    {key: "O", filename: "O", solenoids: [13], solenoidsH: []},
-    {key: "p", filename: "P", solenoids: [], solenoidsH: [5, 6]},  // MISSING, using placeholder
-    {key: "P", filename: "P", solenoids: [5, 6], solenoidsH: []},
-    {key: "q", filename: "Q", solenoids: [1], solenoidsH: [3]},  // MISSING, using placeholder
-    {key: "Q", filename: "Q", solenoids: [1, 3], solenoidsH: []},
-    {key: "r", filename: "R", solenoids: [1], solenoidsH: []},  // MISSING, using placeholder
-    {key: "R", filename: "R", solenoids: [1], solenoidsH: []},
-    {key: "s", filename: "S", solenoids: [1], solenoidsH: [6]},  // MISSING, using placeholder
-    {key: "S", filename: "S", solenoids: [1, 6], solenoidsH: []},
-    {key: "t", filename: "T", solenoids: [], solenoidsH: [6]},  // MISSING, using placeholder
-    {key: "T", filename: "T", solenoids: [6], solenoidsH: []},
-    {key: "u", filename: "U", solenoids: [15], solenoidsH: []},  // MISSING, using placeholder
-    {key: "U", filename: "U", solenoids: [15], solenoidsH: []},
-    {key: "v", filename: "V", solenoids: [2], solenoidsH: [6]},  // MISSING, using placeholder
-    {key: "V", filename: "V", solenoids: [2, 6], solenoidsH: []},
-    {key: "w", filename: "W", solenoids: [1], solenoidsH: [5]},  // MISSING, using placeholder
-    {key: "W", filename: "W", solenoids: [1, 5], solenoidsH: []},
-    {key: "x", filename: "X", solenoids: [1], solenoidsH: [4]},  // MISSING, using placeholder
-    {key: "X", filename: "X", solenoids: [1, 4], solenoidsH: []},
-    {key: "y", filename: "Y", solenoids: [10], solenoidsH: []},  // MISSING, using placeholder
-    {key: "Y", filename: "Y", solenoids: [10], solenoidsH: []},
-    {key: "z", filename: "Z", solenoids: [], solenoidsH: [3, 5]},  // MISSING, using placeholder
-    {key: "Z", filename: "Z", solenoids: [3, 5], solenoidsH: []}
+    {key: "a", filename: "A", solenoids: [11], solenoidsH: []},  
+    {key: "A", filename: "AA", solenoids: [11], solenoidsH: []},
+    {key: "b", filename: "B", solenoids: [2], solenoidsH: [4]},  
+    {key: "B", filename: "BB", solenoids: [2, 4], solenoidsH: []},
+    {key: "c", filename: "C", solenoids: [], solenoidsH: [4]},  
+    {key: "C", filename: "CC", solenoids: [4], solenoidsH: []},
+    {key: "d", filename: "D", solenoids: [2], solenoidsH: [5]},  
+    {key: "D", filename: "DD", solenoids: [2, 5], solenoidsH: []},
+    {key: "e", filename: "E", solenoids: [13], solenoidsH: []},  
+    {key: "E", filename: "EE", solenoids: [13], solenoidsH: []},
+    {key: "f", filename: "F", solenoids: [1, 2], solenoidsH: []},  
+    {key: "F", filename: "FF", solenoids: [1, 2], solenoidsH: []},
+    {key: "g", filename: "G", solenoids: [2], solenoidsH: [6]},  
+    {key: "G", filename: "GG", solenoids: [2, 6], solenoidsH: []},
+    {key: "h", filename: "H", solenoids: [1], solenoidsH: []},  
+    {key: "H", filename: "HH", solenoids: [1], solenoidsH: []},
+    {key: "i", filename: "I", solenoids: [12], solenoidsH: []},  
+    {key: "I", filename: "II", solenoids: [12], solenoidsH: []},
+    {key: "j", filename: "J", solenoids: [], solenoidsH: [4, 5]},  
+    {key: "J", filename: "JJ", solenoids: [4, 5], solenoidsH: []},
+    {key: "k", filename: "K", solenoids: [], solenoidsH: [4, 5]},  
+    {key: "K", filename: "KK", solenoids: [4, 5], solenoidsH: []},
+    {key: "l", filename: "L", solenoids: [2], solenoidsH: []},  
+    {key: "L", filename: "LL", solenoids: [2], solenoidsH: []},
+    {key: "m", filename: "M", solenoids: [], solenoidsH: [4, 6]},  
+    {key: "M", filename: "MM", solenoids: [4, 6], solenoidsH: []},
+    {key: "n", filename: "N", solenoids: [], solenoidsH: [5]},  
+    {key: "N", filename: "NN", solenoids: [5], solenoidsH: []},
+    {key: "o", filename: "O", solenoids: [13], solenoidsH: []},  
+    {key: "O", filename: "OO", solenoids: [13], solenoidsH: []},
+    {key: "p", filename: "P", solenoids: [], solenoidsH: [5, 6]},  
+    {key: "P", filename: "PP", solenoids: [5, 6], solenoidsH: []},
+    {key: "q", filename: "Q", solenoids: [1], solenoidsH: [3]},  
+    {key: "Q", filename: "QQ", solenoids: [1, 3], solenoidsH: []},
+    {key: "r", filename: "R", solenoids: [1], solenoidsH: []},  
+    {key: "R", filename: "RR", solenoids: [1], solenoidsH: []},
+    {key: "s", filename: "S", solenoids: [1], solenoidsH: [6]},  
+    {key: "S", filename: "SS", solenoids: [1, 6], solenoidsH: []},
+    {key: "t", filename: "T", solenoids: [], solenoidsH: [6]},
+    {key: "T", filename: "TT", solenoids: [6], solenoidsH: []},
+    {key: "u", filename: "U", solenoids: [15], solenoidsH: []}, 
+    {key: "U", filename: "UU", solenoids: [15], solenoidsH: []},
+    {key: "v", filename: "V", solenoids: [2], solenoidsH: [6]},  
+    {key: "V", filename: "VV", solenoids: [2, 6], solenoidsH: []},
+    {key: "w", filename: "W", solenoids: [1], solenoidsH: [5]}, 
+    {key: "W", filename: "WW", solenoids: [1, 5], solenoidsH: []},
+    {key: "x", filename: "X", solenoids: [1], solenoidsH: [4]}, 
+    {key: "X", filename: "XX", solenoids: [1, 4], solenoidsH: []},
+    {key: "y", filename: "Y", solenoids: [10], solenoidsH: []},
+    {key: "Y", filename: "YY", solenoids: [10], solenoidsH: []},
+    {key: "z", filename: "Z", solenoids: [], solenoidsH: [3, 5]},  
+    {key: "Z", filename: "ZZ", solenoids: [3, 5], solenoidsH: []},
+    {key: "!", filename: "!", solenoids: [7, 8, 9, 10], solenoidsH: []},
+    {key: "%", filename: "%", solenoids: [], solenoidsH: [7, 8, 9]},
+    {key: "&", filename: "&", solenoids: [11, 12, 13], solenoidsH: []},
+    {key: "?", filename: "_question", solenoids: [9, 10], solenoidsH: [15]},
+    {key: "+", filename: "+", solenoids: [12, 13, 14], solenoidsH: []},
+    {key: "-", filename: "-", solenoids: [], solenoidsH: [16, 17, 18]},
+    {key: "_", filename: "_", solenoids: [], solenoidsH: [5, 6, 7, 8, 9]}
 ]
 
 const SOUND_ASSETS_DEBUG = [
-    {key: "#", filename: "hash", solenoids: [14, 16, 17, 18], solenoidsH: []},
-    {key: "/", filename: "slash", solenoids: [], solenoidsH: [7, 17, 18]},
-    {key: ")", filename: ")", solenoids: [], solenoidsH: [8, 17]}
+    {key: "0", filename: "0", solenoids: [7], solenoidsH: []},
+    {key: "1", filename: "1", solenoids: [], solenoidsH: [8]},
+    {key: "2", filename: "2", solenoids: [17], solenoidsH: []},
+    {key: "3", filename: "3", solenoids: [13], solenoidsH: []},
+    {key: "4", filename: "4", solenoids: [1], solenoidsH: []},
+    {key: "5", filename: "5", solenoids: [5], solenoidsH: []},
+    {key: "6", filename: "6", solenoids: [10], solenoidsH: []},
+    {key: "7", filename: "7", solenoids: [], solenoidsH: [9]},
+    {key: "8", filename: "8", solenoids: [12], solenoidsH: []},
+    {key: "9", filename: "9", solenoids: [], solenoidsH: [5, 6]}
 ]   
 
 const defaultTexts = [
-    "sdgdfg",
-    "cxgd g dgf fd h",
-    "dgj vj sh vs  sfhs hf sdjfh sjhf js bf fjhs b"
+    "An analogy to illustrate the concept of truth: imagine a white pixel on a black screen.",
+    "We can indicate a point on the screen even if we don't know what black and white are.",
+    "In order to be able to say that a point is black or white, I must first know when a point is called black and when white.",
+    "three_four_maybe_app. Produced by NDC: Xavier Bonfill (artistic direction, sound design), Antonio Martinez (UI design), Frederic Font (app developer). Based on the composition three_four_maybe by Xavier Bonfill, performed by NEKO3. Album out on dontlookbackrecords.com"
 ]
 
 const FILE_EXTENSION = 'mp3';
@@ -357,7 +372,7 @@ function playSoundForKey(key){
 
 function play(){
     if (IS_PLAYING){
-        stop();
+        pause();
     } else {
         playButton.className = 'pauseIcon';
         playButtonLabel.innerText = 'pause'
@@ -370,6 +385,16 @@ function stop(){
     IS_PLAYING = false;
     TEXT_PLAYHEAD_POSITION = 0;
     setInputTextAnimationPosition(0);
+    clearTimeout(CURRENT_PLAYING_TIMEOUT);
+    playButton.className = 'playIcon';
+    playButtonLabel.innerText = 'play'
+    updateRectangles();
+}
+
+function pause(){
+    IS_PLAYING = false;
+    //TEXT_PLAYHEAD_POSITION = 0;
+    //setInputTextAnimationPosition(0);
     clearTimeout(CURRENT_PLAYING_TIMEOUT);
     playButton.className = 'playIcon';
     playButtonLabel.innerText = 'play'
