@@ -113,7 +113,7 @@ var PASTE_NUM_LAST_CHARS = 10;
 var SHOW_LOADING_SCREEN = true;
 var BASE_AUDIO_URL = "https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/audio/";
 var BASE_AUDIO_URL_DEV = "static/audio/";
-if ('ffont.github.io' === window.location.hostname){ BASE_AUDIO_URL = BASE_AUDIO_URL_DEV;}
+if ('ffont.github.io' !== window.location.hostname){ BASE_AUDIO_URL = BASE_AUDIO_URL_DEV;}
 
 const placeholder = document.getElementById('placeholder');
 const textInput = document.getElementById('textInput');
