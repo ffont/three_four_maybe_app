@@ -226,10 +226,10 @@ function init(){
         updateDataUrlParam();
     })
 
-    //const shareButton = document.getElementById('shareButton');
-    //shareButton.addEventListener("click", function(event){
-    //    share();
-    //});
+    const shareButton = document.getElementById('shareButton');
+    shareButton.addEventListener("click", function(event){
+        share();
+    });
 
     menuToggle.addEventListener("click", function(event){
         folderMenu.classList.remove("menu-hidden");

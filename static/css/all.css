@@ -109,6 +109,16 @@ body {
     opacity: 1.0;
 }    
 
+.shareIcon {
+    /*background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/folder.svg');*/
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 20px;
+    width: 26px;
+    cursor: pointer;
+    margin-left: 15px;
+}
+
 .folderIcon {
     background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/folder.svg');
     background-repeat: no-repeat;
