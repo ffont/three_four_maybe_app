@@ -111,6 +111,9 @@ var IS_LOOPING = false;
 var PASTE_PLAY_SPEED = 30;
 var PASTE_NUM_LAST_CHARS = 10;
 var SHOW_LOADING_SCREEN = true;
+var BASE_AUDIO_URL = "https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/audio/";
+var BASE_AUDIO_URL_DEV = "static/audio/";
+if ('ffont.github.io' === window.location.hostname){ BASE_AUDIO_URL = BASE_AUDIO_URL_DEV;}
 
 const placeholder = document.getElementById('placeholder');
 const textInput = document.getElementById('textInput');
@@ -360,7 +363,7 @@ function getSoundUrlFromKey(key){
     var foundUrl = undefined;
     SOUND_ASSETS.forEach(el => {
         if (el.key === key){
-            foundUrl = `static/audio/${el.filename}.${FILE_EXTENSION}`;
+            foundUrl = `${BASE_AUDIO_URL}${el.filename}.${FILE_EXTENSION}`;
         }
     });
     return foundUrl;
