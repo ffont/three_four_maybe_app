@@ -107,7 +107,7 @@ const KEYS_WITH_SOUNDS = SOUND_ASSETS.map(el => el.key);
 const VALID_KEYS = KEYS_WITH_SOUNDS + [' '];
 var IS_PLAYING = false;
 var CURRENT_PLAYING_TIMEOUT = undefined;
-var TEXT_PLAYHEAD_POSITION = 0;
+var TEXT_PLAYHEAD_POSITION = -1;
 var IS_LOOPING = false;
 var PASTE_PLAY_SPEED = 30;
 var PASTE_NUM_LAST_CHARS = 10;
@@ -391,8 +391,8 @@ function play(){
 
 function stop(){
     IS_PLAYING = false;
-    TEXT_PLAYHEAD_POSITION = 0;
-    setInputTextAnimationPosition(0);
+    TEXT_PLAYHEAD_POSITION = -1;
+    setInputTextAnimationPosition(TEXT_PLAYHEAD_POSITION);
     clearTimeout(CURRENT_PLAYING_TIMEOUT);
     playButton.className = 'playIcon';
     playButtonLabel.innerText = 'play'
@@ -401,8 +401,6 @@ function stop(){
 
 function pause(){
     IS_PLAYING = false;
-    //TEXT_PLAYHEAD_POSITION = 0;
-    //setInputTextAnimationPosition(0);
     clearTimeout(CURRENT_PLAYING_TIMEOUT);
     playButton.className = 'playIcon';
     playButtonLabel.innerText = 'play'
@@ -431,8 +429,8 @@ function parseText(text){
 
 function playNextSound(){
     let text = textInput.innerText;
-    if (TEXT_PLAYHEAD_POSITION > text.length){
-        // We reached end of text, loop or stop
+    if (TEXT_PLAYHEAD_POSITION == text.length){
+        // We reached end of text, schedule next sound or stop
         if (IS_LOOPING) {
             TEXT_PLAYHEAD_POSITION = 0;
             CURRENT_PLAYING_TIMEOUT = setTimeout(() => {
@@ -442,15 +440,17 @@ function playNextSound(){
             stop();
         }
     } else {
-        // Play sound, set animtion and schedule next one
-        let bpm = tempoSlider.value;
-        var timeIntervalMs = 1000.0 * 60.0 / (bpm * 4);
+        // Play sound, set animtion
         let key = text[TEXT_PLAYHEAD_POSITION];
         if (key !== undefined){
             playSoundForKey(text[TEXT_PLAYHEAD_POSITION]);
         }
         setInputTextAnimationPosition(TEXT_PLAYHEAD_POSITION);
         updateRectangles();
+
+        // Schedule next sound
+        let bpm = tempoSlider.value;
+        var timeIntervalMs = 1000.0 * 60.0 / (bpm * 4);
         TEXT_PLAYHEAD_POSITION += 1;
         CURRENT_PLAYING_TIMEOUT = setTimeout(() => {
             playNextSound();
@@ -557,8 +557,8 @@ const setInputTextAnimationPosition = (currentPosition) => {
         currentPosition = 0;
     }
     let offset = Cursor.getCurrentCursorPosition(textInput);
-    const textBefore = text.substring(0, currentPosition);
-    const textAfter = text.substring(currentPosition, text.length);
+    const textBefore = text.substring(0, currentPosition + 1);
+    const textAfter = text.substring(currentPosition + 1, text.length);
     textInput.innerHTML =  '<span class="textAnimated">' + textBefore + '</span>' + textAfter;
     Cursor.setCurrentCursorPosition(offset, textInput);
     //textInput.focus(); // no need for that?
