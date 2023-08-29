@@ -155,9 +155,9 @@ function init(){
     setPlaceholderIfNeeded();
 
     if (IS_LOOPING){
-        loopButton.classList.add('active');
+        loopButton.className = 'loopIcon';
     } else {
-        loopButton.classList.remove('active');
+        loopButton.className = 'oneTimeIcon';
     }
 
     // Init listeners
@@ -211,9 +211,9 @@ function init(){
     loopButton.addEventListener("click", function(event){
         IS_LOOPING = !IS_LOOPING;
         if (IS_LOOPING){
-            loopButton.classList.add('active');
+            loopButton.className = 'loopIcon';
         } else {
-            loopButton.classList.remove('active');
+            loopButton.className = 'oneTimeIcon';
         }
     });
 
