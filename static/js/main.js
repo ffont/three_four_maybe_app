@@ -172,6 +172,10 @@ function init(){
     });
     textInput.addEventListener("input", function(){
         updateDataUrlParam();
+        if (textInput.innerText.length === 1){
+            TEXT_PLAYHEAD_POSITION = -1;
+            setInputTextAnimationPosition(TEXT_PLAYHEAD_POSITION);
+        }
     })
     textInput.addEventListener("paste", function(e){
         e.preventDefault();
@@ -544,7 +548,7 @@ const deviceType = () => {
 };
 
 const setPlaceholderIfNeeded = () => {
-    if (textInput.innerText.length <= 1){
+    if (textInput.innerText.length < 1){
         placeholder.style.display = 'block';
     } else {
         placeholder.style.display = 'none';

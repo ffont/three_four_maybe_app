@@ -37,7 +37,7 @@ body {
 .rectWrapper {
     display: flex;
     width: 100%;
-    height: 40px;
+    height: 80px;
     margin-top: 40px;
     margin-bottom: 50px;
 }
@@ -45,21 +45,177 @@ body {
 .rect {
     width: 0;
     height: 100%;
-    flex-grow: 1;
 }
 
 .on {
-    background-color: #000;
-    transition: linear 0.05s;
+    opacity: 1.0;
+    transition:  opacity 0.05s;
 }
 
 .off {
-    background-color: #f1f1f1;
-    transition: linear 0.05s;
+    opacity: 0.0;
+    /*transition:  opacity 0.05s;*/
 }
 
 .half {
     opacity: 0.5;
+    transition:  opacity 0.05s;
+}
+
+#s1 {
+    background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/51.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    flex-grow: 43;
+}
+
+#s2 {
+    background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/51.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    flex-grow: 43;
+}
+
+#s3 {
+    background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/48.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    flex-grow: 43;
+}
+
+#s4 {
+    background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/48.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    flex-grow: 43;
+}
+
+#s5 {
+    background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/52.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    flex-grow: 13;
+}
+
+#s6 {
+    background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/52.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    flex-grow: 13;
+}
+
+#s7 {
+    background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/36a.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    flex-grow: 43;
+}
+
+#s7.half {
+    background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/36b.svg');
+    opacity: 1.0!important;
+}
+
+#s8 {
+    background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/36a.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    flex-grow: 43;
+}
+
+#s8.half {
+    background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/36b.svg');
+    opacity: 1.0!important;
+}
+
+#s9 {
+    background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/36a.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    flex-grow: 43;
+}
+
+#s9.half {
+    background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/36b.svg');
+    opacity: 1.0!important;
+}
+
+#s10 {
+    background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/39.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    flex-grow: 22;
+}
+
+#s11 {
+    background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/39.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    flex-grow: 22;
+}
+
+#s12 {
+    background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/39.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    flex-grow: 22;
+}
+
+#s13 {
+    background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/39.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    flex-grow: 22;
+}
+
+#s14 {
+    background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/39.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    flex-grow: 22;
+}
+
+#s15 {
+    background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/39.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    flex-grow: 22;
+}
+
+#s16 {
+    background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/45a.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    flex-grow: 15;
+}
+
+#s16.half {
+    background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/45b.svg');
+    opacity: 1.0!important;
+}
+
+#s17 {
+    background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/45a.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    flex-grow: 15;
+}
+
+#s17.half {
+    background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/45b.svg');
+    opacity: 1.0!important;
+}
+
+#s18 {
+    background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/45a.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    flex-grow: 15;
+}
+
+#s18.half {
+    background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/45b.svg');
+    opacity: 1.0!important;
 }
 
 .disabled {
@@ -68,8 +224,7 @@ body {
 }
 
 .logo {
-    background-image: url('/static/assets/logo.v2.svg');
-    /*background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/logo.v2.svg');*/
+    background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/logo.v2.svg');
     background-repeat: no-repeat;
     background-size: contain;
     height: 20px;
@@ -167,7 +322,7 @@ body {
     box-shadow: none!important;
     border: 0;
     resize: none;
-    display: inline-block
+    display: block;
 }
 
 .formattedInput:focus
