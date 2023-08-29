@@ -346,6 +346,7 @@ body {
     letter-spacing: 0em;
     text-align: left;
     color: #000;
+    height: 10px; /* to avoid breaking lower menu position in mobile (?) */
 }
 
 .textAnimated {
