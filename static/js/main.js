@@ -353,7 +353,7 @@ function onKeyPress(event){
         displayRectanglesPerKey(keyCharacter);
         setTimeout( function(){
             displayRectanglesPerKey(undefined);
-        }, 100);
+        }, 500);
     } else {
         //console.log('No sound for: ', keyCharacter);
     }
