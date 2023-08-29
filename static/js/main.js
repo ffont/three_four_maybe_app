@@ -433,7 +433,7 @@ function parseText(text){
 
 function playNextSound(){
     let text = textInput.innerText;
-    if (TEXT_PLAYHEAD_POSITION == text.length){
+    if (TEXT_PLAYHEAD_POSITION >= text.length){
         // We reached end of text, schedule next sound or stop
         if (IS_LOOPING) {
             TEXT_PLAYHEAD_POSITION = 0;
