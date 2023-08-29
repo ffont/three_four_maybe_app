@@ -1,6 +1,7 @@
 body {
     background-color: #f1f1f1;
     margin: 0;
+    font-weight: 400;
 }
 
 .frame {
@@ -70,11 +71,12 @@ body {
     background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/logo.v2.svg');
     background-repeat: no-repeat;
     background-size: contain;
-    height: 30px;
+    height: 20px;
+    margin-top: 5px;
 }
 
 .playIcon {
-    background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/play.fill.v2.png');
+    background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/play.fill.svg');
     background-repeat: no-repeat;
     background-size: contain;
     height: 30px;
@@ -84,7 +86,7 @@ body {
 }
 
 .pauseIcon {
-    background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/pause.fill.v2.png');
+    background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/pause.fill.svg');
     background-repeat: no-repeat;
     background-size: contain;
     height: 30px;
@@ -102,19 +104,17 @@ body {
     margin-bottom: 15px;
     margin-left: calc(50% - 13px);
     cursor: pointer;
-    opacity: 0.5;
 }
 
 .oneTimeIcon {
     background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/one_time.svg');
     background-repeat: no-repeat;
     background-size: contain;
-    height: 20px;
-    margin-top: 5px;
-    margin-bottom: 15px;
-    margin-left: calc(50% - 13px);
+    height: 13px;
+    margin-top: 8px;
+    margin-bottom: 19px;
+    margin-left: calc(50% - 14px);
     cursor: pointer;
-    opacity: 0.5;
 }
 
 .active {
@@ -138,6 +138,7 @@ body {
     height: 20px;
     width: 26px;
     cursor: pointer;
+    margin-left: 20px;
 }
 
 .buttonLabel {
@@ -240,6 +241,7 @@ select:focus{
     text-align: left;
     margin-bottom: 15px;
     cursor:pointer;
+    font-weight: 400;
 }
 
 .menu-option:hover {
@@ -250,4 +252,10 @@ select:focus{
 
 .menu-hidden{
     display: none;
+}
+
+.funding{
+    text-align: right;
+    font-size: 12px;
+    margin-top: 100px;
 }

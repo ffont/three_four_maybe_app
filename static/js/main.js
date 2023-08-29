@@ -98,7 +98,8 @@ const defaultTexts = [
     "An analogy to illustrate the concept of truth: imagine a white pixel on a black screen.",
     "We can indicate a point on the screen even if we don't know what black and white are.",
     "In order to be able to say that a point is black or white, I must first know when a point is called black and when white.",
-    "three_four_maybe_app. Produced by NDC: Xavier Bonfill (artistic direction, sound design), Antonio Martinez (UI design), Frederic Font (app developer). Based on the composition three_four_maybe by Xavier Bonfill, performed by NEKO3. Album out on dontlookbackrecords.com"
+    "three_four_maybe_app. Produced by NDC: Xavier Bonfill (artistic direction, sound design), Antonio Martinez (visual design), Frederic Font (app development).",
+    "Based on the composition three_four_maybe by Xavier Bonfill, performed by NEKO3. Album out on dontlookbackrecords.com"
 ]
 
 const FILE_EXTENSION = 'mp3';
@@ -156,8 +157,10 @@ function init(){
 
     if (IS_LOOPING){
         loopButton.className = 'loopIcon';
+        loopButtonLabel.innerText = 'loop';
     } else {
         loopButton.className = 'oneTimeIcon';
+        loopButtonLabel.innerText = 'one time';
     }
 
     // Init listeners
@@ -212,8 +215,10 @@ function init(){
         IS_LOOPING = !IS_LOOPING;
         if (IS_LOOPING){
             loopButton.className = 'loopIcon';
+            loopButtonLabel.innerText = 'loop';
         } else {
             loopButton.className = 'oneTimeIcon';
+            loopButtonLabel.innerText = 'one time';
         }
     });
 
