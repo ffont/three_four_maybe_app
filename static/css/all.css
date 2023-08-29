@@ -67,14 +67,14 @@ body {
 }
 
 .logo {
-    background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/logo.svg');
+    background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/logo.v2.svg');
     background-repeat: no-repeat;
     background-size: contain;
     height: 30px;
 }
 
 .playIcon {
-    background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/play.fill.png');
+    background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/play.fill.v2.png');
     background-repeat: no-repeat;
     background-size: contain;
     height: 30px;
@@ -84,7 +84,7 @@ body {
 }
 
 .pauseIcon {
-    background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/pause.fill.png');
+    background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/pause.fill.v2.png');
     background-repeat: no-repeat;
     background-size: contain;
     height: 30px;
@@ -105,12 +105,24 @@ body {
     opacity: 0.5;
 }
 
+.oneTimeIcon {
+    background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/one_time.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 20px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    margin-left: calc(50% - 13px);
+    cursor: pointer;
+    opacity: 0.5;
+}
+
 .active {
     opacity: 1.0;
 }    
 
 .shareIcon {
-    /*background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/folder.svg');*/
+    background-image: url('https://raw.githubusercontent.com/ffont/three_four_maybe_app/main/static/assets/share.svg');
     background-repeat: no-repeat;
     background-size: contain;
     height: 20px;
