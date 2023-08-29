@@ -513,16 +513,15 @@ function updateRectangles(){
 }
 
 function share(){
-    const hiddenCopyInput = document.getElementById('hiddenCopyInput');
-    if ((navigator.share) && (window.mobileAndTabletCheck())) {
-            navigator.share({
-                title: 'Three Forur Maybe App Patch',
-                url: window.location.href
-            }).then(() => {
-                // Do nothing
-            })
-            .catch(console.error);
+    if (navigator.share) {
+        navigator.share({
+            title: 'three_four_maybe patch',
+            url: window.location.href
+          }).then(() => {
+            
+          }).catch(console.error);
     } else {
+        const hiddenCopyInput = document.getElementById('hiddenCopyInput');
         hiddenCopyInput.value = window.location.href;
         hiddenCopyInput.select(); 
         hiddenCopyInput.setSelectionRange(0, 99999);
