@@ -102,6 +102,56 @@ const defaultTexts = [
     "Based on the composition three_four_maybe by Xavier Bonfill, performed by NEKO3. Album out on dontlookbackrecords.com"
 ]
 
+const REPLACE_MAP = {
+    "á": "a",
+    "à": "a",
+    "ä": "a",
+    "â": "a",
+    "é": "e",
+    "è": "e",
+    "ë": "e",
+    "ê": "e",
+    "í": "i",
+    "ì": "i",
+    "ï": "i",
+    "î": "i",
+    "ó": "o",
+    "ò": "o",
+    "ö": "o",
+    "ô": "o",
+    "ú": "u",
+    "ù": "u",
+    "ü": "u",
+    "û": "u",
+    "ñ": "n",
+    "ç": "c",
+    "Á": "A",
+    "À": "A",
+    "Ä": "A",
+    "Â": "A",
+    "É": "E",
+    "È": "E",
+    "Ë": "E",
+    "Ê": "E",
+    "Í": "I",
+    "Ì": "I",
+    "Ï": "I",
+    "Î": "I",
+    "Ó": "O",
+    "Ò": "O",
+    "Ö": "O",
+    "Ô": "O",
+    "Ú": "U",
+    "Ù": "U",
+    "Ü": "U",
+    "Û": "U",
+    "Ñ": "N",
+    "Ç": "C",
+    "ß": "ss",
+    "ø": "o",
+    "æ": "e"
+}
+
 const FILE_EXTENSION = 'mp3';
 const KEYS_WITH_SOUNDS = SOUND_ASSETS.map(el => el.key);
 const VALID_KEYS = KEYS_WITH_SOUNDS + [' '];
@@ -170,7 +220,10 @@ function init(){
             event.preventDefault();
         }
     });
-    textInput.addEventListener("input", function(){
+    textInput.addEventListener("input", function(evt){
+        if (!IS_PLAYING){
+            replaceReplacableCharactersInText();
+        }
         updateDataUrlParam();
         if (textInput.innerText.length === 1){
             TEXT_PLAYHEAD_POSITION = -1;
@@ -346,7 +399,7 @@ function loadSoundAssets(){
 }
 
 function onKeyPress(event){
-    let keyCharacter = event.key; //.toUpperCase();
+    let keyCharacter = replaceIfNeeded(event.key); //.toUpperCase();
     if (keyHasSound(keyCharacter) && !IS_PLAYING){
         //console.log('Playing sound for: ', keyCharacter);
         playSoundForKey(keyCharacter);
@@ -362,6 +415,14 @@ function onKeyPress(event){
 
 function keyIsValid(key){
     return VALID_KEYS.indexOf(key) > -1;
+}
+
+function replaceIfNeeded(character){
+    if (REPLACE_MAP.hasOwnProperty(character)){
+        return REPLACE_MAP[character];
+    } else {
+        return character;
+    }
 }
 
 function keyHasSound(key){
@@ -416,11 +477,32 @@ function clear(){
     updateRectangles();
 }
 
+function replaceReplacableCharactersInText() {
+    
+    let text = textInput.innerText;
+    let newText = "";
+    for (var i = 0; i < text.length; i++) {
+        let character = text.charAt(i);
+        character = replaceIfNeeded(character);
+        newText += character;
+    }
+    
+    // Replace text and set cursor position
+    let offset = Cursor.getCurrentCursorPosition(textInput);
+    const hadFocus = document.activeElement === textInput;
+    textInput.innerText = newText;
+    if (hadFocus){
+        Cursor.setCurrentCursorPosition(offset, textInput);
+        textInput.focus();
+    }
+}
+
 function parseText(text){
-    // Remove unsupported characters
+    // Remove/replace unsupported characters
     var parsedCharacters = [];
     for (var i = 0; i < text.length; i++) {
         let character = text.charAt(i); //.toUpperCase();
+        character = replaceIfNeeded(character);
         let valid = keyIsValid(character);
         if (valid){
             parsedCharacters.push(character);
@@ -560,8 +642,8 @@ const setInputTextAnimationPosition = (currentPosition) => {
         currentPosition = 0;
     }
     let offset = Cursor.getCurrentCursorPosition(textInput);
-    const textBefore = text.substring(0, currentPosition + 1);
-    const textAfter = text.substring(currentPosition + 1, text.length);
+    const textBefore = parseText(text.substring(0, currentPosition + 1));
+    const textAfter = parseText(text.substring(currentPosition + 1, text.length));
     textInput.innerHTML =  '<span class="textAnimated">' + textBefore + '</span>' + textAfter;
     Cursor.setCurrentCursorPosition(offset, textInput);
     //textInput.focus(); // no need for that?
