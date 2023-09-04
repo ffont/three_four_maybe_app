@@ -221,9 +221,6 @@ function init(){
         }
     });
     textInput.addEventListener("input", function(evt){
-        if (!IS_PLAYING){
-            replaceReplacableCharactersInText();
-        }
         updateDataUrlParam();
         if (textInput.innerText.length === 1){
             TEXT_PLAYHEAD_POSITION = -1;
@@ -399,7 +396,7 @@ function loadSoundAssets(){
 }
 
 function onKeyPress(event){
-    let keyCharacter = replaceIfNeeded(event.key); //.toUpperCase();
+    let keyCharacter = event.key; //.toUpperCase();
     if (keyHasSound(keyCharacter) && !IS_PLAYING){
         //console.log('Playing sound for: ', keyCharacter);
         playSoundForKey(keyCharacter);
@@ -414,7 +411,7 @@ function onKeyPress(event){
 }
 
 function keyIsValid(key){
-    return VALID_KEYS.indexOf(key) > -1;
+    return VALID_KEYS.indexOf(replaceIfNeeded(key)) > -1;
 }
 
 function replaceIfNeeded(character){
@@ -426,7 +423,7 @@ function replaceIfNeeded(character){
 }
 
 function keyHasSound(key){
-    return KEYS_WITH_SOUNDS.indexOf(key) > -1;
+    return KEYS_WITH_SOUNDS.indexOf(replaceIfNeeded(key)) > -1;
 }
 
 function getSoundUrlFromKey(key){
@@ -440,7 +437,7 @@ function getSoundUrlFromKey(key){
 }
 
 function playSoundForKey(key){
-    playSound(this['buf_' + key], 0);
+    playSound(this['buf_' + replaceIfNeeded(key)], 0);
 }
 
 function play(){
@@ -477,32 +474,11 @@ function clear(){
     updateRectangles();
 }
 
-function replaceReplacableCharactersInText() {
-    
-    let text = textInput.innerText;
-    let newText = "";
-    for (var i = 0; i < text.length; i++) {
-        let character = text.charAt(i);
-        character = replaceIfNeeded(character);
-        newText += character;
-    }
-    
-    // Replace text and set cursor position
-    let offset = Cursor.getCurrentCursorPosition(textInput);
-    const hadFocus = document.activeElement === textInput;
-    textInput.innerText = newText;
-    if (hadFocus){
-        Cursor.setCurrentCursorPosition(offset, textInput);
-        textInput.focus();
-    }
-}
-
 function parseText(text){
     // Remove/replace unsupported characters
     var parsedCharacters = [];
     for (var i = 0; i < text.length; i++) {
         let character = text.charAt(i); //.toUpperCase();
-        character = replaceIfNeeded(character);
         let valid = keyIsValid(character);
         if (valid){
             parsedCharacters.push(character);
@@ -568,8 +544,8 @@ function displayRectanglesPerKey(key){
     var rectsOn = []
     var rectsOnH = []
     if (key !== undefined){
-        rectsOn = getRectaglesOnForKey(key);
-        rectsOnH = getRectaglesOnHalfForKey(key);
+        rectsOn = getRectaglesOnForKey(replaceIfNeeded(key));
+        rectsOnH = getRectaglesOnHalfForKey(replaceIfNeeded(key));
     }
     const rectDivs = rectaglesWrapper.getElementsByClassName('rect');
     for (var i=0; i<rectDivs.length; i++){
