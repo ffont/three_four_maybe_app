@@ -99,7 +99,8 @@ const defaultTexts = [
     "We can indicate a point on the screen even if we don't know what black and white are.",
     "In order to be able to say that a point is black or white, I must first know when a point is called black and when white.",
     "three_four_maybe_app. Produced by NDC: Xavier Bonfill (artistic direction, sound design), Antonio Martinez (visual design), Frederic Font (app development).",
-    "Based on the composition three_four_maybe by Xavier Bonfill, performed by NEKO3. Album out on dontlookbackrecords.com"
+    "Based on the composition three_four_maybe by Xavier Bonfill, performed by NEKO3. Album out on dontlookbackrecords.com",
+    "The content on this app is released under a Creative Commons Attribution Non-Commercial License. Any other use beyond those terms is only possible with direct and explicit consent from the authors. The original composition \"three_four_maybe\" is protected by copyright laws. Xavier Bonfill (c) 2021."
 ]
 
 const REPLACE_MAP = {
@@ -220,9 +221,23 @@ function init(){
             event.preventDefault();
         }
     });
-    textInput.addEventListener("input", function(evt){
+    textInput.addEventListener("input", function(event){
+        if (event.data !== null){
+            if (event.data.length == 1){
+                const keyCharacter = event.data;
+                if (keyHasSound(keyCharacter) && !IS_PLAYING){
+                    //console.log('Playing sound for: ', keyCharacter);
+                    playSoundForKey(keyCharacter);
+                    displayRectanglesPerKey(keyCharacter);
+                    setTimeout( function(){
+                        displayRectanglesPerKey(undefined);
+                    }, 500);
+                }
+            }
+        }
+
         updateDataUrlParam();
-        if (textInput.innerText.length === 1){
+        if (textInput.innerText.trim().length === 0){
             TEXT_PLAYHEAD_POSITION = -1;
             setInputTextAnimationPosition(TEXT_PLAYHEAD_POSITION);
         }
@@ -397,6 +412,7 @@ function loadSoundAssets(){
 
 function onKeyPress(event){
     let keyCharacter = event.key; //.toUpperCase();
+    /* // Don't play sound on keypress as we're not doing it in the input event
     if (keyHasSound(keyCharacter) && !IS_PLAYING){
         //console.log('Playing sound for: ', keyCharacter);
         playSoundForKey(keyCharacter);
@@ -406,7 +422,7 @@ function onKeyPress(event){
         }, 500);
     } else {
         //console.log('No sound for: ', keyCharacter);
-    }
+    }*/
     return keyIsValid(keyCharacter);
 }
 
@@ -605,7 +621,7 @@ const deviceType = () => {
 };
 
 const setPlaceholderIfNeeded = () => {
-    if (textInput.innerText.length < 1){
+    if (textInput.innerText.trim().length < 1){
         placeholder.style.display = 'block';
     } else {
         placeholder.style.display = 'none';
